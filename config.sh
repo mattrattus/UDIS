@@ -38,8 +38,8 @@ ufw default deny
 ufw allow 22122/tcp
 ufw enable
 systemctl enable --now ufw
-read -p "Press enter to continue"
 
+read -p "Press enter to continue"
 echo -e "\033[36m<<<<<===== fail2ban config =====>>>>>\033[0m"
 systemctl start fail2ban
 cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
@@ -49,8 +49,8 @@ systemctl reload fail2ban
 systemctl enable fail2ban
 fail2ban-client status
 fail2ban-client status sshd
-read -p "Press enter to continue"
 
+read -p "Press enter to continue"
 echo -e "\033[36m<<<<<===== rkhunter config =====>>>>>\033[0m"
 mv /etc/rkhunter.conf /etc/rkhunter.conf_backup
 mv rkhunter.conf /etc/rkhunter.conf
@@ -68,6 +68,26 @@ touch /home/$user_sudo/.ssh/authorized_keys
 chown $user_sudo:$user_sudo /home/$user_sudo/.ssh /home/$user_sudo/.ssh/authorized_keys
 vim /home/$user_sudo/.ssh/authorized_keys
 
-echo -e "\033[36m<<<<<===== Final config =====>>>>>\033[0m"
 read -p "Press enter to continue"
-shred -zun 3 config.sh
+echo -e "\033[36m<<<<<===== Add ansible user? /// 'Y'es /// /// 'N'o /// =====>>>>>\033[0m"
+read -p "Add?: " ansible_user
+echo "You've decided: "$ansible_user
+
+if [[ $ansible_user = Y ]]; then
+    useradd -m -G sudo ansible
+    passwd ansible
+    mkdir /home/ansible/.ssh
+    touch /home/ansible/.ssh/authorized_keys
+    chown ansible:ansible /home/ansible/.ssh /home/ansible/.ssh/authorized_keys
+    vim /home/ansible/.ssh/authorized_keys
+
+    echo -e "\033[36m<<<<<===== Final config =====>>>>>\033[0m"
+    read -p "Press enter to continue"
+    shred -zun 3 config.sh
+
+elif [[ $ansible_user = N ]]; then
+    echo -e "\033[36m<<<<<===== Final config =====>>>>>\033[0m"
+    read -p "Press enter to continue"
+    shred -zun 3 config.sh
+
+fi
