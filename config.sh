@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #created by mattrattus
-#v1.0
+#v1.1
 
 echo -e "\033[36m<<<<<===== Change the root password =====>>>>>\033[0m"
 passwd
