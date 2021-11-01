@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-#created by mattrattus
-#v1.1
+#UDIS
+#v1.0.0
+#by mattrattus
+#https://mattrattus.github.io
 
 echo -e "\033[36m<<<<<===== Change the root password =====>>>>>\033[0m"
 passwd
