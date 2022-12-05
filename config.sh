@@ -10,7 +10,6 @@ passwd
 
 echo -e "\033[36m<<<<<===== Local config =====>>>>>\033[0m"
 timedatectl set-timezone Europe/Warsaw
-localectl set-keymap pl
 echo "LANG=en_US.UTF-8
 LC_MESSAGES=C
 LC_ADDRESS=pl_PL.UTF-8
