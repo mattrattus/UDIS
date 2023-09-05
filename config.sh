@@ -27,7 +27,7 @@ apt update
 apt upgrade
 
 echo -e "\033[36m<<<<<===== Installing additional software =====>>>>>\033[0m"
-apt install curl ufw fail2ban rkhunter unhide vim git zsh unzip htop
+apt install curl ufw fail2ban rkhunter unhide vim git zsh unzip htop tar rsync
 
 echo -e "\033[36m<<<<<===== sshd config =====>>>>>\033[0m"
 mv /etc/ssh/sshd_config /etc/ssh/sshd_config_backup
