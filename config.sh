@@ -1,15 +1,27 @@
 #!/usr/bin/env bash
 
 #UDIS
-#v1.0.0
+#v1.0.1
 #by mattrattus
 #https://mattrattus.github.io
 
 echo -e "\033[36m<<<<<===== Change the root password =====>>>>>\033[0m"
 passwd
 
-echo -e "\033[36m<<<<<===== Local config =====>>>>>\033[0m"
+echo -e "\033[36m<<<<<===== timezone config =====>>>>>\033[0m"
 timedatectl set-timezone Europe/Warsaw
+
+echo -e "\033[36m<<<<<===== Update =====>>>>>\033[0m"
+apt update
+apt -y upgrade
+
+echo -e "\033[36m<<<<<===== Installing additional software =====>>>>>\033[0m"
+apt -y install curl ufw fail2ban rkhunter unhide vim git zsh unzip htop tar rsync locales
+
+echo -e "\033[36m<<<<<===== Locale config =====>>>>>\033[0m"
+locale-gen en_US.UTF-8
+locale-gen pl_PL.UTF-8
+
 echo "LANG=en_US.UTF-8
 LC_MESSAGES=C
 LC_ADDRESS=pl_PL.UTF-8
@@ -22,22 +34,16 @@ LC_PAPER=pl_PL.UTF-8
 LC_TELEPHONE=pl_PL.UTF-8
 LC_TIME=pl_PL.UTF-8" > /etc/locale.conf
 
-echo -e "\033[36m<<<<<===== Update =====>>>>>\033[0m"
-apt update
-apt -y upgrade
-
-echo -e "\033[36m<<<<<===== Installing additional software =====>>>>>\033[0m"
-apt -y install curl ufw fail2ban rkhunter unhide vim git zsh unzip htop tar rsync
-
 echo -e "\033[36m<<<<<===== sshd config =====>>>>>\033[0m"
 mv /etc/ssh/sshd_config /etc/ssh/sshd_config_backup
 mv sshd_config /etc/ssh/sshd_config
-systemctl restart sshd
+systemctl restart ssh
+systemctl enable --now ssh
 
 echo -e "\033[36m<<<<<===== UFW config =====>>>>>\033[0m"
 ufw default deny
 ufw allow 22122/tcp
-ufw enable
+ufw --force enable
 systemctl enable --now ufw
 
 read -p "Press enter to continue"
