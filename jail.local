@@ -241,7 +241,7 @@ enabled = true
 mode   = normal
 port    = ssh,22,22122
 logpath = %(sshd_log)s
-backend = %(sshd_backend)s
+backend = systemd
 
 
 [dropbear]
